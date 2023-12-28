@@ -1,11 +1,11 @@
-import { useContext, useState } from 'react'
+import { useContext, useReducer } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { TestContext } from './contexts/TestContext'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, dispatch] = useReducer(reducer, 0);
   const contextValue = useContext(TestContext);
   return (
     <>
@@ -19,8 +19,15 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <p>count is {count}</p>
+        <button onClick={() => {dispatch({type: 'increment'})}}>
+          increment
+        </button>
+        <button onClick={() => {dispatch({type: 'decrement'})}}>
+          decrement
+        </button>
+        <button onClick={() => {dispatch({type: 'reset'})}}>
+          reset       
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
@@ -32,6 +39,28 @@ function App() {
       </p>
     </>
   )
+}
+
+type actionType = 
+| {
+  type: 'increment'
+}
+| {
+  type: 'decrement'
+}
+| {
+  type: 'reset'
+}
+
+const reducer = (state: number, action: actionType) => {
+  switch (action.type) {
+    case 'increment':
+      return state + 1
+    case 'decrement':
+      return state - 1
+    case 'reset':
+      return 0
+  }
 }
 
 export default App
