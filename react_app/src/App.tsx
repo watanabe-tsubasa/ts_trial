@@ -4,8 +4,6 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { TestContext } from './contexts/TestContext'
 
-
-
 function App() {
   const [count, setCount] = useState(0)
   const contextValue = useContext(TestContext);
